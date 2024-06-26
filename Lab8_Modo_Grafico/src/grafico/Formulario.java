@@ -21,8 +21,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JRadioButton;
 public class Formulario extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -30,6 +32,8 @@ public class Formulario extends JFrame {
 	private JTextField textNombre;
 	private JTextField textIndice;
 	private JTextField textCedula;
+	private JRadioButton rdbtnMasculino;
+	private JRadioButton rdbtnFemenino;
 	private Estudiantes estudiante;
 	private JComboBox comboBoxCarreras;
 	
@@ -75,40 +79,40 @@ public class Formulario extends JFrame {
 		
 		textNombre = new JTextField();
 		textNombre.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textNombre.setBounds(141, 102, 153, 19);
+		textNombre.setBounds(141, 99, 153, 19);
 		contentPane.add(textNombre);
 		textNombre.setColumns(10);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Indice:");
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_1_1.setBounds(21, 239, 95, 22);
+		lblNewLabel_1_1.setBounds(21, 364, 95, 22);
 		contentPane.add(lblNewLabel_1_1);
 		
 		textIndice = new JTextField();
 		textIndice.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textIndice.setColumns(10);
-		textIndice.setBounds(141, 240, 153, 19);
+		textIndice.setBounds(141, 363, 153, 19);
 		contentPane.add(textIndice);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Cédula:");
 		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_1_1_1.setBounds(21, 166, 95, 22);
+		lblNewLabel_1_1_1.setBounds(21, 186, 95, 22);
 		contentPane.add(lblNewLabel_1_1_1);
 		
 		textCedula = new JTextField();
 		textCedula.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textCedula.setColumns(10);
-		textCedula.setBounds(141, 167, 153, 19);
+		textCedula.setBounds(141, 187, 153, 19);
 		contentPane.add(textCedula);
 		
 		JLabel lblNewLabel_1_1_2 = new JLabel("Carrera:");
 		lblNewLabel_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_1_1_2.setBounds(21, 308, 95, 22);
+		lblNewLabel_1_1_2.setBounds(21, 453, 95, 22);
 		contentPane.add(lblNewLabel_1_1_2);
 		
 		comboBoxCarreras = new JComboBox();
 		comboBoxCarreras.setModel(new DefaultComboBoxModel(new String[] {"Ingeniería Civil", "Ingeniería Eléctrica", "Ingeniería Industrial", "Ingeniería en Sistemas", "Ingeniería Mecánica", "Ingeniería Marítima"}));
-		comboBoxCarreras.setBounds(141, 312, 153, 21);
+		comboBoxCarreras.setBounds(141, 451, 153, 21);
 		comboBoxCarreras.setSelectedIndex(-1);
 		contentPane.add(comboBoxCarreras);
 		
@@ -121,6 +125,27 @@ public class Formulario extends JFrame {
 		btnReportes.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnReportes.setBounds(700, 361, 184, 34);
 		contentPane.add(btnReportes);
+		
+		JLabel lblNewLabel_1_1_3 = new JLabel("Sexo:");
+		lblNewLabel_1_1_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_1_1_3.setBounds(21, 275, 95, 22);
+		contentPane.add(lblNewLabel_1_1_3);
+		
+		rdbtnMasculino = new JRadioButton("Masculino");
+		rdbtnMasculino.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		rdbtnMasculino.setBounds(116, 276, 105, 21);
+		contentPane.add(rdbtnMasculino);
+		
+		rdbtnFemenino = new JRadioButton("Femenino");
+		rdbtnFemenino.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		rdbtnFemenino.setBounds(233, 276, 105, 21);
+		contentPane.add(rdbtnFemenino);
+		
+		ButtonGroup grupoSexo = new ButtonGroup();
+		grupoSexo.add(rdbtnMasculino);
+		grupoSexo.add(rdbtnFemenino);
+		
+		
 		// Agregar ActionListener para el botón "Guardar Datos"
         btnGuardar.addActionListener(new ActionListener() {
             @Override
@@ -129,6 +154,7 @@ public class Formulario extends JFrame {
                 guardarDatos();
             }
         });
+        
         btnReportes.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Cierra la ventana actual
@@ -146,21 +172,32 @@ public class Formulario extends JFrame {
                 reportes.mostrarBecados(becas);
             }
         });
+        
 	}
 	 private void guardarDatos() {
 		 try {
 		        // Obtener los datos ingresados por el usuario
 		        String nombre = textNombre.getText();
 		        String cedula = textCedula.getText();
+		        String sexo;
 		        double indice = Double.parseDouble(textIndice.getText());
 		        String carrera = (String) comboBoxCarreras.getSelectedItem();
-
+		        
+		        if (rdbtnMasculino.isSelected()) {
+					sexo = "Masculino";
+				} else if (rdbtnFemenino.isSelected()) {
+					sexo = "Femenino";
+				} else {
+					JOptionPane.showMessageDialog(this, "Ingrese el sexo del estudiante.", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+		        
 		        if (indice<0 || indice>3) {
 		        	JOptionPane.showMessageDialog(this, "Por favor, ingrese índice válido.", "Error", JOptionPane.ERROR_MESSAGE);
 		        	return;
 		        }
 		        
-		        Estudiantes estudiante = new Estudiantes(nombre, cedula, carrera, indice);
+		        Estudiantes estudiante = new Estudiantes(nombre, cedula, sexo, carrera, indice);
 		        // Impresión en consola
 		        System.out.println("Información del estudiante guardada: " + estudiante.toString());
 		        estudiantes.add(estudiante);
@@ -178,5 +215,4 @@ public class Formulario extends JFrame {
 		        JOptionPane.showMessageDialog(this, "Por favor, ingrese datos válidos para Índice.", "Error", JOptionPane.ERROR_MESSAGE);
 		    }
 		}
-
 }
