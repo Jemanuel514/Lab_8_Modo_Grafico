@@ -106,7 +106,7 @@ public class Formulario extends JFrame {
 		lblNewLabel_1_1_2.setBounds(21, 308, 95, 22);
 		contentPane.add(lblNewLabel_1_1_2);
 		
-		 comboBoxCarreras = new JComboBox();
+		comboBoxCarreras = new JComboBox();
 		comboBoxCarreras.setModel(new DefaultComboBoxModel(new String[] {"Ingeniería Civil", "Ingeniería Eléctrica", "Ingeniería Industrial", "Ingeniería en Sistemas", "Ingeniería Mecánica", "Ingeniería Marítima"}));
 		comboBoxCarreras.setBounds(141, 312, 153, 21);
 		comboBoxCarreras.setSelectedIndex(-1);
@@ -155,7 +155,11 @@ public class Formulario extends JFrame {
 		        double indice = Double.parseDouble(textIndice.getText());
 		        String carrera = (String) comboBoxCarreras.getSelectedItem();
 
-		       
+		        if (indice<0 || indice>3) {
+		        	JOptionPane.showMessageDialog(this, "Por favor, ingrese índice válido.", "Error", JOptionPane.ERROR_MESSAGE);
+		        	return;
+		        }
+		        
 		        Estudiantes estudiante = new Estudiantes(nombre, cedula, carrera, indice);
 		        // Impresión en consola
 		        System.out.println("Información del estudiante guardada: " + estudiante.toString());
