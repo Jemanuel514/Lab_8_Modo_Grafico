@@ -16,11 +16,13 @@ import java.util.ArrayList;
 
 import javax.swing.JList;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class Reportes extends JFrame {
 	private JTextArea textAreaBecados;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -64,6 +66,16 @@ public class Reportes extends JFrame {
 		textAreaBecados.setEditable(false);
 		textAreaBecados.setBounds(52, 151, 184, 220);
 		contentPane.add(textAreaBecados);
+		
+		textField = new JTextField();
+		textField.setBounds(106, 58, 130, 20);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("Cédula");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_2.setBounds(52, 59, 51, 14);
+		contentPane.add(lblNewLabel_2);
 
 		
 	}
@@ -73,8 +85,8 @@ public class Reportes extends JFrame {
         StringBuilder sb = new StringBuilder();
         sb.append("Nombres de los Estudiantes:\n");
 
-        for (String nombre : becas.obtenerEstudiantesBecados()) {
-            sb.append(nombre).append("\n");
+        for (Estudiantes estudiante : becas.obtenerEstudiantesBecados()) {
+            sb.append(estudiante.getNombre()).append("          ").append(estudiante.getCedula());
         }
 
         textAreaBecados.setText(sb.toString());

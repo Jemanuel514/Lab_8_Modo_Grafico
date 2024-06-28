@@ -24,5 +24,10 @@ public class Estudiantes {
     public String getNombre() {
         return nombre;
     }
+    
+    public String getCedula() {
+        return cedula;
+    }
+    
 
 }
