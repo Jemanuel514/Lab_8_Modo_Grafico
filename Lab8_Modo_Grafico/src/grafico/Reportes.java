@@ -90,15 +90,16 @@ public class Reportes extends JFrame {
 		contentPane.add(comboBoxCarreras);
 		
 		//CONFIGURACIÓN DE TABLA
+		//Tabla
+		datosEstudiantes = new JTable();
+		datosEstudiantes.setBounds(24, 151, 603, 285);
+		contentPane.add(datosEstudiantes);
+		
 		//Modelo de tabla
 		modeloTabla = new DefaultTableModel();
 		modeloTabla.setColumnIdentifiers(new String[] {"Nombre", "Cédula", "Carrera", "Índice", "Sexo"});
 		datosEstudiantes.setModel(modeloTabla);
 		
-		//Tabla
-		datosEstudiantes = new JTable();
-		datosEstudiantes.setBounds(66, 174, 461, 225);
-		contentPane.add(datosEstudiantes);
 		
 	} //Fin del constructor
 
