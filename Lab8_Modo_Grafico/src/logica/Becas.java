@@ -21,7 +21,7 @@ public class Becas {
         ArrayList<Estudiantes> estudiantesBecados = new ArrayList<>();
 
         for (Estudiantes estudiante : estudiantes) {
-            if (estudiante.getIndiceAcademico() >= 2.0) {
+            if (estudiante.getIndice() >= 2.0) {
                 estudiantesBecados.add(estudiante);
             }
         }
