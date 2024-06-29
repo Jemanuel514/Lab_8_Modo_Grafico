@@ -17,12 +17,12 @@ public class Becas {
         }
     }
 
-    public ArrayList<String> obtenerEstudiantesBecados() {
-        ArrayList<String> estudiantesBecados = new ArrayList<>();
+    public ArrayList<Estudiantes> obtenerEstudiantesBecados() {
+        ArrayList<Estudiantes> estudiantesBecados = new ArrayList<>();
 
         for (Estudiantes estudiante : estudiantes) {
-            if (estudiante.getIndiceAcademico() >= 2.0) {
-                estudiantesBecados.add(estudiante.getNombre());
+            if (estudiante.getIndice() >= 2.0) {
+                estudiantesBecados.add(estudiante);
             }
         }
 
