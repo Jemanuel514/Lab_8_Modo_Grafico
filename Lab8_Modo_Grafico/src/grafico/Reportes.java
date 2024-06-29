@@ -17,12 +17,17 @@ import java.util.ArrayList;
 import javax.swing.JList;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTable;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 
 public class Reportes extends JFrame {
 	private JTextArea textAreaBecados;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -43,6 +48,38 @@ public class Reportes extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	class TableExample extends JFrame {
+	    private JTable table;
+	    private DefaultTableModel model;
+
+	    public TableExample() {
+	        
+	       
+
+	        // Crear el modelo de la tabla
+	        model = new DefaultTableModel();
+	        model.addColumn("Nombre");
+	        model.addColumn("Cedula");
+	        model.addColumn("Carrera");
+	        model.addColumn("Indice");
+	        model.addColumn("Sexo");
+
+	        // Crear la tabla
+	        table = new JTable(model);
+	        public void añadirFila(Object[] estudiante) {
+	        	 model.addRow(estudiante);
+	   
+	        }
+	        
+
+	        // Añadir los datos de la lista al modelo de la tabla
+	      
+	        }
+	    
+	    }
+	
+	
+	
 	public Reportes() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 666, 483);
@@ -76,19 +113,31 @@ public class Reportes extends JFrame {
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel_2.setBounds(52, 59, 51, 14);
 		contentPane.add(lblNewLabel_2);
+		
+		
+		
+		TableExample tablaEstudiantes = new TableExample();
+		
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Ingeniería Civil", "Ingeniería Eléctrica", "Ingeniería Industrial", "Ingeniería en Sistemas", "Ingeniería Mecánica", "Ingeniería Marítima"}));
+		comboBox.setBounds(328, 57, 184, 22);
+		contentPane.add(comboBox);
+		
+		JLabel lblNewLabel_3 = new JLabel("Carrera");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel_3.setBounds(274, 61, 49, 14);
+		contentPane.add(lblNewLabel_3);
 
 		
-	}
 	void mostrarBecados(Becas becas) {
         System.out.println("Estudiantes becados obtenidos: " + becas.obtenerEstudiantesBecados().size());
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("Nombres de los Estudiantes:\n");
-
+        
         for (Estudiantes estudiante : becas.obtenerEstudiantesBecados()) {
-            sb.append(estudiante.getNombre()).append("          ").append(estudiante.getCedula());
+        	Object[] datosEstudiante = {estudiante.getNombre(), estudiante.getCedula(), estudiante.getCarrera(), estudiante.getIndiceAcademico(), estudiante.getSexo()};
+        	tablaEstudiantes.añadirFila(datosEstudiante);
         }
 
-        textAreaBecados.setText(sb.toString());
+	
     }
 }
