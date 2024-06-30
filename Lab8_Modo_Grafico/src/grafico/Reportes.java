@@ -39,6 +39,7 @@ public class Reportes extends JFrame {
 	private JComboBox<String> comboBoxCarreras;
 	private DefaultTableModel  modeloTabla;
 	private JTable datosEstudiantes;
+	private JComboBox<String> comboBoxSexo;
 	
 	//Ejecución de ventana
 	public static void main(String[] args) {
@@ -124,6 +125,23 @@ public class Reportes extends JFrame {
 		modeloTabla.setColumnIdentifiers(new String[] {"Nombre", "Cédula", "Carrera", "Índice", "Sexo"});
 		datosEstudiantes.setModel(modeloTabla);
 		
+		JLabel lblNewLabel = new JLabel("Sexo");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel.setBounds(274, 86, 49, 22);
+		contentPane.add(lblNewLabel);
+		
+		comboBoxSexo = new JComboBox();
+		comboBoxSexo.setModel(new DefaultComboBoxModel(new String[] {"Todos", "Masculino", "Femenino"}));
+		comboBoxSexo.setBounds(328, 90, 184, 20);
+		comboBoxSexo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Acción ejecutada al presionar el botón
+				filtro();
+			}
+		});
+		contentPane.add(comboBoxSexo);
+		
 		
 	} //Fin del constructor
 
@@ -156,9 +174,12 @@ public class Reportes extends JFrame {
 	        filtros.add(RowFilter.regexFilter(filtroCarrera, 2)); // Índice 2 para la columna de carrera
 	    }
 
+	    String filtroSexo = (String) comboBoxSexo.getSelectedItem();
+	    if (!filtroSexo.equals("Todos")) {
+	        filtros.add(RowFilter.regexFilter(filtroSexo, 4)); // Índice 2 para la columna de sexo
+	    }
+	    
 	    RowFilter<Object, Object> filtroCompuesto = RowFilter.andFilter(filtros);
 	    sorter.setRowFilter(filtroCompuesto);
 	}
-
-	
 }
