@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
@@ -25,6 +27,7 @@ import logica.Estudiantes;
 
 //Otras importaciones
 import java.util.ArrayList;
+import java.util.List;
 
 //Clase Reportes
 public class Reportes extends JFrame {
@@ -86,7 +89,15 @@ public class Reportes extends JFrame {
 		//CONFIGURACIÓN DE CAMPOS DE TEXTO
 		textCedula = new JTextField();
 		textCedula.setBounds(106, 58, 130, 20);
+		textCedula.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				//Acción ejecutada al presionar el botón
+				filtro();
+			}
+		});
 		contentPane.add(textCedula);
+		
 		
 		//CONFIGURACIÓN DE MENÚ DESPLEGABLE
 		comboBoxCarreras = new JComboBox<String>();
@@ -96,7 +107,7 @@ public class Reportes extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Acción ejecutada al presionar el botón
-				filtrarCarrera();
+				filtro();
 			}
 		});
 		
@@ -126,17 +137,27 @@ public class Reportes extends JFrame {
         }
 
     }
-	void filtrarCarrera() {
-	    DefaultTableModel modelo = (DefaultTableModel) datosEstudiantes.getModel();
+	
+	
+	void filtro() {
+		DefaultTableModel modelo = (DefaultTableModel) datosEstudiantes.getModel();
 	    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
 	    datosEstudiantes.setRowSorter(sorter);
+	    
+	    List<RowFilter<Object, Object>> filtros = new ArrayList<>();
 
-	    String filtro = (String) comboBoxCarreras.getSelectedItem();
-	    if (!filtro.equals("Todos")) {
-	        sorter.setRowFilter(RowFilter.regexFilter(filtro, 2)); // El índice 2 representa la columna por la cual se filtra
-	    } else {
-	        sorter.setRowFilter(null); // Mostrar todos los datos
+	    String filtroCedula = textCedula.getText();
+	    if (!filtroCedula.equals("")) {
+	        filtros.add(RowFilter.regexFilter("^" + filtroCedula, 1)); // Índice 1 para la columna de cédula
 	    }
+
+	    String filtroCarrera = (String) comboBoxCarreras.getSelectedItem();
+	    if (!filtroCarrera.equals("Todos")) {
+	        filtros.add(RowFilter.regexFilter(filtroCarrera, 2)); // Índice 2 para la columna de carrera
+	    }
+
+	    RowFilter<Object, Object> filtroCompuesto = RowFilter.andFilter(filtros);
+	    sorter.setRowFilter(filtroCompuesto);
 	}
 
 	
