@@ -1,38 +1,39 @@
 package logica;
 
+
+
 public class Estudiantes {
 	private String nombre;
     private String cedula;
-    private String carrera;
     private String sexo;
-    private double indice;
+    private String carrera;
+    private double indiceAcademico;
 
-    public Estudiantes(String nombre, String cedula, String sexo, String carrera, double indice) {
+    public Estudiantes(String nombre, String cedula, String sexo, String carrera, double indiceAcademico) {
         this.nombre = nombre;
         this.cedula = cedula;
         this.sexo = sexo;
         this.carrera = carrera;
-        this.indice = indice;
+        this.indiceAcademico = indiceAcademico;
+    }
+
+    public double getIndice() {
+        return indiceAcademico;
     }
 
     public String getNombre() {
-    	return nombre;
+        return nombre;
     }
     
     public String getCedula() {
-    	return cedula;
+        return cedula;
     }
-    
+    public String getSexo() {
+    	return sexo;
+    }
     public String getCarrera() {
     	return carrera;
     }
     
-    public String getSexo() {
-    	return sexo;
-    }
-    
-    public double getIndice() {
-        return indice;
-    }
 
 }
