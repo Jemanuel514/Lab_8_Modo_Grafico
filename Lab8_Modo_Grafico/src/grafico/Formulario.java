@@ -117,7 +117,7 @@ public class Formulario extends JFrame {
 		textIndice = new JTextField();
 		textIndice.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		textIndice.setColumns(10);
-		textIndice.setBounds(141, 352, 153, 19);
+		textIndice.setBounds(141, 351, 153, 19);
 		contentPane.add(textIndice);
 		
 		

@@ -8,11 +8,16 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 //Importación de clases de lógica
 import logica.Becas;
@@ -85,8 +90,16 @@ public class Reportes extends JFrame {
 		
 		//CONFIGURACIÓN DE MENÚ DESPLEGABLE
 		comboBoxCarreras = new JComboBox<String>();
-		comboBoxCarreras.setModel(new DefaultComboBoxModel<String>(new String[] {"Ingeniería Civil", "Ingeniería Eléctrica", "Ingeniería Industrial", "Ingeniería en Sistemas", "Ingeniería Mecánica", "Ingeniería Marítima"}));
+		comboBoxCarreras.setModel(new DefaultComboBoxModel<String>(new String[] {"Todos","Ingeniería Civil", "Ingeniería Eléctrica", "Ingeniería Industrial", "Ingeniería en Sistemas", "Ingeniería Mecánica", "Ingeniería Marítima"}));
 		comboBoxCarreras.setBounds(328, 57, 184, 22);
+		comboBoxCarreras.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Acción ejecutada al presionar el botón
+				filtrarCarrera();
+			}
+		});
+		
 		contentPane.add(comboBoxCarreras);
 		
 		//CONFIGURACIÓN DE TABLA
@@ -113,5 +126,18 @@ public class Reportes extends JFrame {
         }
 
     }
+	void filtrarCarrera() {
+	    DefaultTableModel modelo = (DefaultTableModel) datosEstudiantes.getModel();
+	    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
+	    datosEstudiantes.setRowSorter(sorter);
+
+	    String filtro = (String) comboBoxCarreras.getSelectedItem();
+	    if (!filtro.equals("Todos")) {
+	        sorter.setRowFilter(RowFilter.regexFilter(filtro, 2)); // El índice 2 representa la columna por la cual se filtra
+	    } else {
+	        sorter.setRowFilter(null); // Mostrar todos los datos
+	    }
+	}
+
 	
 }
